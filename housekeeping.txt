@@ -1,0 +1,12 @@
+Forum:
+1. Thread
+2. Reply
+3. User
+
+A. Thread is created by a user
+B. A reply belongs to a thread & belongs to a user
+----------------------------------------
+Initial Database setup with seeding:
+php artisan tinker
+$threads = factory('App\Thread', 10)->create()
+$threads->each(function ($thread) { factory('App\Reply', 5)->create(['thread_id' => $thread->id, 'user_id' => $thread->user_id]); });

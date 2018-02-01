@@ -10,3 +10,10 @@ Initial Database setup with seeding:
 php artisan tinker
 $threads = factory('App\Thread', 10)->create()
 $threads->each(function ($thread) { factory('App\Reply', 5)->create(['thread_id' => $thread->id, 'user_id' => $thread->user_id]); });
+----------------------------------------
+Testing: 
+Rename tests/Feature/ExampleTest to tests/Feature/ThreadsTest
+Add in ThreadsTest top: use Illuminate\Foundation\Testing\DatabaseMigrations;
+And inside class: use DatabaseMigrations;
+Create alias for phpunit in cmder by: alias phpunit=vendor\bin\phpunit
+Now in cmder write command: phpunit

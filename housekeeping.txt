@@ -17,3 +17,4 @@ Add in ThreadsTest top: use Illuminate\Foundation\Testing\DatabaseMigrations;
 And inside class: use DatabaseMigrations;
 Create alias for phpunit in cmder by: alias phpunit=vendor\bin\phpunit
 Now in cmder write command: phpunit
+Important: every method need annotation just above: /** @test */

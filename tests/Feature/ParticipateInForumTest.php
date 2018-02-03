@@ -14,7 +14,7 @@ class ParticipateInForumTest extends TestCase
     public function unauthenticated_users_may_not_add_replies()
     {
         $thread = factory('App\Thread')->create();
-        $reply = factory('App\Reply')->create();
+        $reply = factory('App\Reply')->make();
         $this->post('/threads/' . $thread->id . '/replies', $reply->toArray())
             ->assertRedirect('/login');
     }
@@ -23,7 +23,7 @@ class ParticipateInForumTest extends TestCase
     {
         $this->be($user = factory('App\User')->create());
         $thread = factory('App\Thread')->create();
-        $reply = factory('App\Reply')->create();
+        $reply = factory('App\Reply')->make();
         $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
         // $this->get('/threads/' . $thread->id);
         $this->get($thread->path())

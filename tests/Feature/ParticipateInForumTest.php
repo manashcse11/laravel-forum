@@ -13,9 +13,9 @@ class ParticipateInForumTest extends TestCase
     /** @test  */
     public function unauthenticated_users_may_not_add_replies()
     {
-        $thread = factory('App\Thread')->create();
-        $reply = factory('App\Reply')->make();
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray())
+        $thread = create('App\Thread');
+        $reply = make('App\Reply');
+        $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertRedirect('/login');
     }
     /** @test  */
@@ -24,9 +24,19 @@ class ParticipateInForumTest extends TestCase
         $this->be($user = factory('App\User')->create());
         $thread = factory('App\Thread')->create();
         $reply = factory('App\Reply')->make();
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $this->post($thread->path() . '/replies', $reply->toArray());
         // $this->get('/threads/' . $thread->id);
         $this->get($thread->path())
             ->assertSee($reply->body);
+    }
+    /** @test  */
+    public function a_reply_requires_a_body()
+    {
+        $this->signIn();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['body' => null]);
+        $this->post($thread->path() . '/replies', $reply->toArray());
+        $this->get($thread->path() . '/replies')
+            ->assertSessionHasErrors('body');
     }
 }

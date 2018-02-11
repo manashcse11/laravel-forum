@@ -25,7 +25,7 @@
     @if(auth()->check())
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form method="POST" action="/threads/{{$thread->id}}/replies">
+            <form method="POST" action="{{$thread->path()}}/replies">
             {{csrf_field()}}
             <div class="form-group">
                 <textarea class="form-control" rows="5" id="body" name="body" placeholder="Have something to say?"></textarea>

@@ -16,14 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        // View Composer
-        
-        // \View::composer('*', function($view){
-        //     $view->with('channels', Channel::all());
-        // });
-        
-        // or below line
-        \View::share('channels', Channel::all());
+        // View Composer        
+        \View::composer('*', function($view){
+            $view->with('channels', Channel::all());
+        });
+        // or below line (But will give error in test)
+        // \View::share('channels', Channel::all());
     }
 
     /**

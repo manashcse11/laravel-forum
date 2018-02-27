@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Favourite;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
@@ -10,5 +11,16 @@ class Reply extends Model
     
     public function owner(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function favourites(){
+        return $this->morphMany(Favourite::class, 'favourited');
+    }
+
+    public function favourite(){
+        $attributes = ['user_id' => auth()->id()];
+        if(!$this->favourites()->where($attributes)->exists()){
+            return $this->favourites()->create($attributes);
+        }        
     }
 }

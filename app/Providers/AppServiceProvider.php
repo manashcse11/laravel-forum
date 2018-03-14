@@ -18,7 +18,10 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         // View Composer        
         \View::composer('*', function($view){
-            $view->with('channels', Channel::all());
+            $channels = \Cache::rememberForever('channels', function () {
+                return Channel::all();
+            });
+            $view->with('channels', $channels);
         });
         // or below line (But will give error in test)
         // \View::share('channels', Channel::all());
